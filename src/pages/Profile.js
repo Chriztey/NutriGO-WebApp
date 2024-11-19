@@ -29,6 +29,7 @@ function Dashboard() {
   const [isProfileComplete, setIsProfileComplete] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [loadingNutritionData, setLoadingNutritionData] = useState(false);
+  const [loadingProfile, setLoadingProfile] = useState(false);
   const navigate = useNavigate();
 
   const currentDate = new Intl.DateTimeFormat("en-US", {
@@ -39,6 +40,7 @@ function Dashboard() {
 
   useEffect(() => {
     const checkAuthAndFetchUserData = async () => {
+      setLoadingProfile(true);
       const user = auth.currentUser;
 
       if (!user) {
@@ -52,6 +54,7 @@ function Dashboard() {
           const data = userDoc.data();
           setUserName(data.displayName || "User");
           setPhoneNumber(data.phoneNumber || "No phone number");
+          setLoadingProfile(false);
 
           const requiredFields = [
             "phoneNumber",
@@ -203,10 +206,20 @@ function Dashboard() {
 
               <div className="text-start">
                 <p className="text-lg">
-                  <strong>Name:</strong> {userName}
+                  {loadingProfile ? (
+                    <p className="text-gray-400">Loading Profile</p>
+                  ) : (
+                    `Name:
+                  ${userName}`
+                  )}
                 </p>
                 <p className="text-lg">
-                  <strong>Phone:</strong> {phoneNumber}
+                  {loadingProfile ? (
+                    <p className="text-gray-400"></p>
+                  ) : (
+                    `Phone:
+                  ${phoneNumber}`
+                  )}
                 </p>
               </div>
             </div>
@@ -267,7 +280,7 @@ function Dashboard() {
           </p>
         )}
 
-        <button
+        {/* <button
           onClick={handleButtonClick}
           disabled={!isProfileComplete}
           className={`w-full md:w-auto py-2 px-6 rounded-md font-medium flex flex-row justify-center items-center space-x-2 ${
@@ -277,7 +290,7 @@ function Dashboard() {
           }`}
         >
           <span>Connect With</span> <FaWhatsapp className="text-xl" />
-        </button>
+        </button> */}
 
         {/* Date Navigation */}
         <div className="flex items-center justify-left space-x-4 pt-8">
