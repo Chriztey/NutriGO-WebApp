@@ -26,10 +26,11 @@ function Dashboard() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [userName, setUserName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [isProfileComplete, setIsProfileComplete] = useState(false);
+  const [isProfileComplete, setIsProfileComplete] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [loadingNutritionData, setLoadingNutritionData] = useState(false);
   const [loadingProfile, setLoadingProfile] = useState(false);
+  const [loading, setLoading] = useState(true); // Initial loading for data fetch
   const navigate = useNavigate();
 
   const currentDate = new Intl.DateTimeFormat("en-US", {
@@ -38,41 +39,43 @@ function Dashboard() {
     day: "numeric",
   }).format(new Date());
 
+  const checkAuthAndFetchUserData = async () => {
+    setLoadingProfile(true);
+    const user = auth.currentUser;
+
+    if (!user) {
+      setIsAuthenticated(false);
+      return;
+    }
+
+    try {
+      const userDoc = await getDoc(doc(firestore, "users", user.uid));
+      if (userDoc.exists()) {
+        const data = userDoc.data();
+
+        setUserName(data.displayName || "User");
+        setPhoneNumber(data.phoneNumber || "No phone number");
+        setLoadingProfile(false);
+
+        const requiredFields = [
+          "phoneNumber",
+          "country",
+          "gender",
+          "age",
+          "weight",
+          "height",
+          "activity",
+        ];
+        const isComplete = requiredFields.every((field) => data[field]);
+        setIsProfileComplete(isComplete);
+        setLoading(false); // Stop loading after data is fetched
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
   useEffect(() => {
-    const checkAuthAndFetchUserData = async () => {
-      setLoadingProfile(true);
-      const user = auth.currentUser;
-
-      if (!user) {
-        setIsAuthenticated(false);
-        return;
-      }
-
-      try {
-        const userDoc = await getDoc(doc(firestore, "users", user.uid));
-        if (userDoc.exists()) {
-          const data = userDoc.data();
-          setUserName(data.displayName || "User");
-          setPhoneNumber(data.phoneNumber || "No phone number");
-          setLoadingProfile(false);
-
-          const requiredFields = [
-            "phoneNumber",
-            "country",
-            "gender",
-            "age",
-            "weight",
-            "height",
-            "activity",
-          ];
-          const isComplete = requiredFields.every((field) => data[field]);
-          setIsProfileComplete(isComplete);
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-
     checkAuthAndFetchUserData();
     fetchTodayNutritionData();
   }, []);
@@ -178,6 +181,18 @@ function Dashboard() {
 
   if (!isAuthenticated) {
     return <Navigate to="/home" replace />;
+  }
+
+  if (!isProfileComplete) {
+    return <Navigate to="/onboarding" />;
+  }
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-[#FCDDF2] text-[#0C4767]">
+        <p className="text-xl">Loading...</p>
+      </div>
+    );
   }
 
   return (

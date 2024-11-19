@@ -1,11 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import './App.css';
-import Home from './pages/Home';
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import Home from "./pages/Home";
 import { auth, provider, db as firestore } from "../src/firebase";
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { setDoc, doc, getDoc } from 'firebase/firestore';
-import Dashboard from './pages/Profile';
-import UserForm from './pages/UserForm';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { setDoc, doc, getDoc } from "firebase/firestore";
+import Dashboard from "./pages/Profile";
+import UserForm from "./pages/UserForm";
+import Onboarding from "./pages/Onboarding";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -44,10 +50,11 @@ function App() {
 
   // Display loading spinner or message until initial load is complete
   if (!initialLoadComplete) {
-    
-    return <div className="flex items-center justify-center h-screen bg-black text-white">
-    <p className="text-xl">Loading...</p>
-  </div>;
+    return (
+      <div className="flex items-center justify-center h-screen bg-black text-white">
+        <p className="text-xl">Loading...</p>
+      </div>
+    );
   }
 
   return (
@@ -55,17 +62,12 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={
-            isAuthenticated ? 
-                <Navigate to="/dashboard" />
-             : 
-              <Home />
-
-          }
+          element={isAuthenticated ? <Navigate to="/dashboard" /> : <Home />}
         />
         <Route path="/user-form" element={<UserForm />} />
         <Route path="/home" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/onboarding" element={<Onboarding></Onboarding>} />
       </Routes>
     </Router>
   );

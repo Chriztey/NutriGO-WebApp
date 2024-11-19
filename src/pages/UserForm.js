@@ -30,6 +30,7 @@ function UserForm() {
   const [isPhoneNumberComplete, setIsPhoneNumberComplete] = useState(false);
   const [loading, setLoading] = useState(true); // Initial loading for data fetch
   const [submitting, setSubmitting] = useState(false); // Loading state for form submission
+  const [phoneSubmitting, setPhoneSubmitting] = useState(false); // Loading state for phone submission
   const navigate = useNavigate();
 
   // Check if the user is authenticated; if not, redirect to home
@@ -150,7 +151,7 @@ function UserForm() {
     if (!validatePhoneNumber(phoneNumber.phoneNumber)) {
       return; // Stop submission if validation fails
     }
-    setIsPhoneNumberComplete(true); // Start submitting state
+    setPhoneSubmitting(true); // Start submitting state
     const user = auth.currentUser;
     if (user) {
       try {
@@ -173,7 +174,7 @@ function UserForm() {
         toast.error("Failed to save phone number. Please try again.");
       }
     }
-    setSubmitting(false); // End submitting state
+    setPhoneSubmitting(false); // End submitting state
   };
 
   if (loading) {
@@ -221,14 +222,14 @@ function UserForm() {
 
         <button
           type="submit"
-          disabled={!isPhoneNumberComplete || submitting}
+          disabled={!isPhoneNumberComplete || submitting || phoneSubmitting}
           className={` w-full py-2 rounded-md font-medium ${
-            isPhoneNumberComplete && !submitting
+            isPhoneNumberComplete && !submitting && !phoneSubmitting
               ? "bg-[#2ee875] hover:bg-[#6E0D25] text-white"
               : "bg-gray-500 cursor-not-allowed"
           }`}
         >
-          {submitting ? "Saving..." : "Link Whatsapp"}
+          {phoneSubmitting ? "Saving..." : "Link Whatsapp"}
         </button>
       </form>
 
@@ -360,9 +361,9 @@ function UserForm() {
 
         <button
           type="submit"
-          disabled={!isFormComplete || submitting}
+          disabled={!isFormComplete || submitting || phoneSubmitting}
           className={`w-full py-2 rounded-md font-medium ${
-            isFormComplete && !submitting
+            isFormComplete && !submitting && !phoneSubmitting
               ? "bg-[#FF7F2A] hover:bg-[#6E0D25] text-white"
               : "bg-gray-500 cursor-not-allowed"
           }`}
