@@ -1,4 +1,4 @@
-# Nutrigo
+# NutriGo WebApp
 
 A free B2B nutrition tracking and analysis app providing personalized micronutrient supplement recommendations.
 
@@ -15,7 +15,7 @@ Follow these steps to clone and start the project:
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/Chriztey/nutrigo.git
+git clone https://github.com/Chriztey/NutriGO-WebApp.git
 ```
 
 ### 2. Navigate to the Project Directory
