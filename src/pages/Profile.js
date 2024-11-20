@@ -13,6 +13,7 @@ import Macronutrients from "../component/WeeklyMacroNutritionChart";
 import VitaminChart from "../component/WeeklyMicroNutrionChart";
 import NutritionDisplay from "../component/NutritionDisplay";
 import ProfileHeader from "../component/ProfileHeader";
+import NutritionDataDisplay from "../component/NutritionDataDisplay.jsx";
 
 function Dashboard() {
   const [nutritionData, setNutritionData] = useState(null);
@@ -20,10 +21,10 @@ function Dashboard() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [userName, setUserName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [isProfileComplete, setIsProfileComplete] = useState(true);
+  const [isProfileComplete, setIsProfileComplete] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [loadingNutritionData, setLoadingNutritionData] = useState(false);
-  const [loadingProfile, setLoadingProfile] = useState(false);
+  const [loadingProfileCheck, setLoadingProfileCheck] = useState(true);
   const [loading, setLoading] = useState(true); // Initial loading for data fetch
   const navigate = useNavigate();
 
@@ -34,7 +35,6 @@ function Dashboard() {
   }).format(new Date());
 
   const checkAuthAndFetchUserData = async () => {
-    setLoadingProfile(true);
     const user = auth.currentUser;
 
     if (!user) {
@@ -49,7 +49,6 @@ function Dashboard() {
 
         setUserName(data.displayName || "User");
         setPhoneNumber(data.phoneNumber || "No phone number");
-        setLoadingProfile(false);
 
         const requiredFields = [
           "phoneNumber",
@@ -62,10 +61,17 @@ function Dashboard() {
         ];
         const isComplete = requiredFields.every((field) => data[field]);
         setIsProfileComplete(isComplete);
-        setLoading(false); // Stop loading after data is fetched
+        setLoadingProfileCheck(false); // Completeness check done
+        setLoading(false); // Stop other loading
+      } else {
+        // If user data doesn't exist, consider profile incomplete
+        setIsProfileComplete(false);
+        setLoadingProfileCheck(false);
       }
     } catch (error) {
       console.error("Error fetching user data:", error);
+      setIsProfileComplete(false); // Fallback to incomplete on error
+      setLoadingProfileCheck(false);
     }
   };
 
@@ -146,21 +152,40 @@ function Dashboard() {
     }
   };
 
+  // Redirect to onboarding if profile is incomplete
+  if (!loadingProfileCheck && !isProfileComplete) {
+    return <Navigate to="/onboarding" replace />;
+  }
+
+  // Redirect to home if not authenticated
   if (!isAuthenticated) {
     return <Navigate to="/home" replace />;
   }
 
-  if (!isProfileComplete) {
-    return <Navigate to="/onboarding" />;
-  }
-
-  if (loading) {
+  // Loading screen
+  if (loading || loadingProfileCheck) {
     return (
       <div className="flex items-center justify-center h-screen bg-[#FCDDF2] text-[#0C4767]">
         <p className="text-xl">Loading...</p>
       </div>
     );
   }
+
+  // if (!isAuthenticated) {
+  //   return <Navigate to="/home" replace />;
+  // }
+
+  // if (!isProfileComplete) {
+  //   return <Navigate to="/onboarding" />;
+  // }
+
+  // if (loading) {
+  //   return (
+  //     <div className="flex items-center justify-center h-screen bg-[#FCDDF2] text-[#0C4767]">
+  //       <p className="text-xl">Loading...</p>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="bg-[#FCDDF2] min-h-screen text-[#0C4767] flex flex-col items-center p-6">
@@ -310,6 +335,9 @@ function Dashboard() {
         </div>
 
         {/* Nutrition Display Section */}
+        {/* <NutritionDataDisplay
+          nutritionData={nutritionData}
+        ></NutritionDataDisplay> */}
         <NutritionDisplay
           nutritionData={nutritionData}
           loading={loadingNutritionData}
