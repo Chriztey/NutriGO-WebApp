@@ -28,6 +28,9 @@ RUN rm -rf ./*
 # Copy the build output from the previous stage
 COPY --from=build-stage /app/build .
 
+# Copy the custom NGINX configuration
+COPY default.conf /etc/nginx/conf.d/default.conf
+
 # Expose port 80
 EXPOSE 80
 
