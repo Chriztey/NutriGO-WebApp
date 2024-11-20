@@ -20,7 +20,7 @@ git clone https://github.com/Chriztey/NutriGO-WebApp.git
 
 ### 2. Navigate to the Project Directory
 ```bash
-cd nutrigo
+cd NutriGo-WebApp
 ```
 
 ### 3. Install Dependencies
