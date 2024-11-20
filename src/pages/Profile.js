@@ -3,22 +3,16 @@ import { useNavigate, Navigate } from "react-router-dom";
 import { auth, db as firestore } from "../firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { signOut } from "firebase/auth";
-import { addDailyNutritionData } from "../helper/NutriService";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import { format, addDays, subDays } from "date-fns";
-import {
-  FaArrowLeft,
-  FaArrowRight,
-  FaCalendarAlt,
-  FaWhatsapp,
-} from "react-icons/fa";
-import { RiLogoutCircleRFill as LogoutIcon } from "react-icons/ri";
-import { CgProfile as ProfileIcon } from "react-icons/cg";
+import { FaArrowLeft, FaArrowRight, FaCalendarAlt } from "react-icons/fa";
+
 import Macronutrients from "../component/WeeklyMacroNutritionChart";
 import VitaminChart from "../component/WeeklyMicroNutrionChart";
 import NutritionDisplay from "../component/NutritionDisplay";
+import ProfileHeader from "../component/ProfileHeader";
 
 function Dashboard() {
   const [nutritionData, setNutritionData] = useState(null);
@@ -143,18 +137,6 @@ function Dashboard() {
     setSelectedDate((prevDate) => addDays(prevDate, 1));
   };
 
-  const handleAddNutritionData = () => {
-    const date = format(selectedDate, "yyyy-MM-dd");
-    addDailyNutritionData(date, {
-      calories: 2000,
-      protein: 100,
-      fat: 70,
-      carbs: 250,
-      fiber: 30,
-      sugar: 50,
-    });
-  };
-
   const logout = async () => {
     try {
       await signOut(auth);
@@ -162,21 +144,6 @@ function Dashboard() {
     } catch (error) {
       console.error("Error signing out:", error);
     }
-  };
-
-  const handleButtonClick = () => {
-    toast.success(
-      "WhatsApp linked successfully! Please check your WhatsApp for a message from NutriGo.",
-      {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      }
-    );
   };
 
   if (!isAuthenticated) {
@@ -198,16 +165,26 @@ function Dashboard() {
   return (
     <div className="bg-[#FCDDF2] min-h-screen text-[#0C4767] flex flex-col items-center p-6">
       <div className="w-full max-w-8xl p-6 bg-white rounded-lg shadow-lg">
+        {/* Profile Header */}
+        <ProfileHeader
+          name={userName}
+          phone={phoneNumber}
+          date={currentDate}
+          todayNutritionData={todayNutritionData ? todayNutritionData : 0}
+          onLogout={logout}
+          onEditProfile={() => navigate("/user-form")}
+        />
+
         {/* Logout Button */}
-        <div className="w-full max-w p-4 flex justify-end">
+        {/* <div className="w-full max-w p-4 flex justify-end">
           <LogoutIcon
             className="text-4xl cursor-pointer text-[#FF7F2A] hover:text-[#6E0D25]"
             onClick={logout}
           />
-        </div>
+        </div> */}
         {/* Date and Profile Section */}
-        <div className="flex flex-col md:flex-row items-stretch gap-6 mb-8">
-          <div className="flex flex-col">
+        {/* <div className="flex flex-col md:flex-row items-stretch gap-6 mb-8"> */}
+        {/* <div className="flex flex-col">
             <h1 className="text-start text-2xl italic">today is</h1>
             <h1 className="text-start text-3xl font-bold mb-6 font-mono">
               {currentDate}
@@ -238,12 +215,12 @@ function Dashboard() {
                 </p>
               </div>
             </div>
-          </div>
+          </div> */}
 
-          {/* Nutrition Data Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 flex-1">
-            {/* Macronutrients Summary */}
-            <div className="bg-gradient-to-r from-gray-900 to-gray-800 text-white p-4 rounded-md shadow-md flex flex-col justify-center">
+        {/* Nutrition Data Cards */}
+        {/* <div className="grid grid-cols-1 md:grid-cols-4 gap-4 flex-1"> */}
+        {/* Macronutrients Summary */}
+        {/* <div className="bg-gradient-to-r from-gray-900 to-gray-800 text-white p-4 rounded-md shadow-md flex flex-col justify-center">
               <p className="font-bold text-2xl font-mono text-start">
                 Today's <br /> Macronutrients Consumption
               </p>
@@ -258,35 +235,35 @@ function Dashboard() {
                     } g`
                   : "No Data"}
               </p>
-            </div>
+            </div> */}
 
-            {/* Calories */}
-            <div className="bg-gray-200 text-black p-4 rounded-md shadow-md flex flex-col justify-top">
+        {/* Calories */}
+        {/* <div className="bg-gray-200 text-black p-4 rounded-md shadow-md flex flex-col justify-top">
               <p className="font-bold text-2xl text-end font-mono">calories</p>
               <p className="text-5xl font-mono font-semibold pt-2">
                 {todayNutritionData
                   ? `${todayNutritionData.calories} kcal`
                   : "0"}
               </p>
-            </div>
+            </div> */}
 
-            {/* Protein */}
-            <div className="bg-gray-400 text-black p-4 rounded-md shadow-md flex flex-col justify-top">
+        {/* Protein */}
+        {/* <div className="bg-gray-400 text-black p-4 rounded-md shadow-md flex flex-col justify-top">
               <p className="font-bold text-2xl text-start font-mono">protein</p>
               <p className="text-5xl font-mono font-semibold pt-2">
                 {todayNutritionData ? `${todayNutritionData.protein} g` : "0"}
               </p>
-            </div>
+            </div> */}
 
-            {/* Fats */}
-            <div className="bg-gray-600 text-white p-4 rounded-md shadow-md flex flex-col justify-top">
+        {/* Fats */}
+        {/* <div className="bg-gray-600 text-white p-4 rounded-md shadow-md flex flex-col justify-top">
               <p className="font-bold text-2xl text-start font-mono">fats</p>
               <p className="text-5xl font-mono font-semibold pt-2">
                 {todayNutritionData ? `${todayNutritionData.fat} g` : "0"}
               </p>
-            </div>
-          </div>
-        </div>
+            </div> */}
+        {/* </div> */}
+        {/* </div> */}
 
         {/* Conditional message if profile is incomplete */}
         {!isProfileComplete && (
