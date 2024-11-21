@@ -310,10 +310,10 @@ function Dashboard() {
         </button> */}
 
         {/* Date Navigation */}
-        <div className="flex items-center justify-left space-x-4 pt-8">
+        {/* <div className="flex items-center justify-left space-x-4 pt-8">
           <h2 className="text-2xl font-bold">
             Nutrition Data for
-            {/* {format(selectedDate, "yyyy-MM-dd")} */}
+            
           </h2>
           <FaArrowLeft
             className="text-2xl cursor-pointer hover:text-[#6E0D25]"
@@ -332,19 +332,21 @@ function Dashboard() {
             className="text-2xl cursor-pointer text-[#FF7F2A] hover:text-[#6E0D25]"
             onClick={handleNextDate}
           />
-        </div>
+        </div> */}
 
         {/* Nutrition Display Section */}
-        {/* <NutritionDataDisplay
+        <NutritionDataDisplay
           nutritionData={nutritionData}
+          selectedDate={selectedDate}
           handleDateChange={handleDateChange}
           handleNextDate={handleNextDate}
           handlePrevDate={handlePreviousDate}
-        ></NutritionDataDisplay> */}
-        <NutritionDisplay
+          loading={loadingNutritionData}
+        ></NutritionDataDisplay>
+        {/* <NutritionDisplay
           nutritionData={nutritionData}
           loading={loadingNutritionData}
-        />
+        /> */}
 
         {/* Vitamin Chart Section */}
         <VitaminChart selectedDate={selectedDate} />

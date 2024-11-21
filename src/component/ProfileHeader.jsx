@@ -48,7 +48,7 @@ export default function ProfileHeader({
           <div className="flex flex-col sm:flex-row sm:items-center gap-4">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center">
-                <User className="w-6 h-6 text-indigo-600" />
+                <User className="w-6 h-6 text-[#eca453]" />
               </div>
               <div>
                 <h2 className="text-xl font-semibold text-gray-800">{name}</h2>
