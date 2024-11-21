@@ -3,15 +3,13 @@ import { useNavigate, Navigate } from "react-router-dom";
 import { auth, db as firestore } from "../firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { signOut } from "firebase/auth";
-import DatePicker from "react-datepicker";
+
 import "react-datepicker/dist/react-datepicker.css";
 import { ToastContainer } from "react-toastify";
 import { format, addDays, subDays } from "date-fns";
-import { FaArrowLeft, FaArrowRight, FaCalendarAlt } from "react-icons/fa";
 
 import Macronutrients from "../component/WeeklyMacroNutritionChart";
 import VitaminChart from "../component/WeeklyMicroNutrionChart";
-import NutritionDisplay from "../component/NutritionDisplay";
 import ProfileHeader from "../component/ProfileHeader";
 import NutritionDataDisplay from "../component/NutritionDataDisplay.jsx";
 import NutritionLoadingScreen from "../component/Loading.jsx";

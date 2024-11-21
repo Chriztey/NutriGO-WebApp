@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import Home from "./pages/Home";
-import { auth, provider, db as firestore } from "../src/firebase";
+import { auth } from "../src/firebase";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
 } from "react-router-dom";
-import { setDoc, doc, getDoc } from "firebase/firestore";
 import Dashboard from "./pages/Profile";
 import UserForm from "./pages/UserForm";
 import Onboarding from "./pages/Onboarding";

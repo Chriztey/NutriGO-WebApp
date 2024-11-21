@@ -24,7 +24,7 @@ export default function NutritionLoadingScreen() {
     <div className="fixed inset-0 bg-gradient-to-br from-green-50 to-blue-50 flex flex-col items-center justify-center">
       {/* App Name */}
 
-      <img src={Logo} className="w-1/5 mx-auto"></img>
+      <img src={Logo} className="w-1/5 mx-auto" alt="loading"></img>
 
       {/* Icon Animation */}
       <div className="relative w-64 h-64 justify-center">

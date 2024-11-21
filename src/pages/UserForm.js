@@ -5,7 +5,6 @@ import { setDoc, doc, getDoc } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import NutritionLoadingScreen from "../component/Loading";
-import { delay } from "framer-motion";
 
 function UserForm() {
   const [formData, setFormData] = useState({
