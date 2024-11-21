@@ -102,7 +102,9 @@ export default function ProfileHeader({
 
           <StatCard
             title="Calories"
-            value={todayNutritionData.calories}
+            value={
+              todayNutritionData.calories ? todayNutritionData.calories : 0
+            }
             icon={<Utensils className="w-5 h-5" />}
             color="bg-yellow-500"
             unit="g"
@@ -110,7 +112,7 @@ export default function ProfileHeader({
 
           <StatCard
             title="Protein"
-            value={todayNutritionData.protein}
+            value={todayNutritionData.protein ? todayNutritionData.protein : 0}
             icon={<Dumbbell className="w-5 h-5" />}
             color="bg-green-500"
             unit="g"
@@ -118,7 +120,7 @@ export default function ProfileHeader({
 
           <StatCard
             title="Fats"
-            value={todayNutritionData.fat}
+            value={todayNutritionData.fat ? todayNutritionData.fat : 0}
             icon={<Droplet className="w-5 h-5" />}
             color="bg-red-500"
             unit="g"
@@ -126,7 +128,7 @@ export default function ProfileHeader({
 
           <StatCard
             title="Carbs"
-            value={todayNutritionData.carbs}
+            value={todayNutritionData.carbs ? todayNutritionData.carbs : 0}
             icon={<Torus className="w-5 h-5" />}
             color="bg-orange-500"
             unit="g"

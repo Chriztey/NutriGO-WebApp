@@ -1,75 +1,111 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight, Calendar } from "lucide-react";
 
-const NutritionDataDisplay = ({ nutritionData }) => {
-  const [date, setDate] = useState(new Date());
+const NutritionDataDisplay = ({
+  nutritionData,
+  date,
+  handlePrevDate,
+  handleNextDate,
+  handleDateChange,
+}) => {
+  // const [date, setDate] = useState(new Date());
 
   const macronutrients = [
     {
       name: "Calories",
-      value: nutritionData.calories,
+      value: nutritionData.calories || 0,
       unit: "kcal",
       max: 2000,
     },
-    { name: "Protein", value: nutritionData.protein, unit: "g", max: 50 },
-    { name: "Fat", value: nutritionData.fat, unit: "g", max: 70 },
-    { name: "Carbohydrates", value: nutritionData.carbs, unit: "g", max: 300 },
-    { name: "Fiber", value: nutritionData.fiber, unit: "g", max: 30 },
+    { name: "Protein", value: nutritionData.protein || 0, unit: "g", max: 50 },
+    { name: "Fat", value: nutritionData.fat || 0, unit: "g", max: 70 },
+    {
+      name: "Carbohydrates",
+      value: nutritionData.carbs || 0,
+      unit: "g",
+      max: 300,
+    },
+    { name: "Fiber", value: nutritionData.fiber || 0, unit: "g", max: 30 },
   ];
 
   const vitamins = [
-    { name: "Vitamin A", value: nutritionData.vitaminA, unit: "AKG", max: 5 },
+    {
+      name: "Vitamin A",
+      value: nutritionData.vitaminA || 0,
+      unit: "AKG",
+      max: 5,
+    },
     {
       name: "Vitamin B1",
-      value: nutritionData.vitaminb1,
+      value: nutritionData.vitaminb1 || 0,
       unit: "AKG",
       max: 15,
     },
     {
       name: "Vitamin B2",
-      value: nutritionData.vitaminb2,
+      value: nutritionData.vitaminb2 || 0,
       unit: "AKG",
       max: 10,
     },
     {
       name: "Vitamin B3",
-      value: nutritionData.vitaminb3,
+      value: nutritionData.vitaminb3 || 0,
       unit: "AKG",
       max: 10,
     },
     {
       name: "Vitamin B6",
-      value: nutritionData.vitaminb6,
+      value: nutritionData.vitaminb6 || 0,
       unit: "AKG",
       max: 10,
     },
     {
       name: "Vitamin B12",
-      value: nutritionData.vitaminb12,
+      value: nutritionData.vitaminb12 || 0,
       unit: "AKG",
       max: 5,
     },
-    { name: "Vitamin C", value: nutritionData.vitaminc, unit: "AKG", max: 60 },
-    { name: "Vitamin D", value: nutritionData.vitamind, unit: "AKG", max: 5 },
-    { name: "Vitamin E", value: nutritionData.vitamine, unit: "AKG", max: 10 },
-    { name: "Vitamin K", value: nutritionData.vitamink, unit: "AKG", max: 10 },
-    { name: "Iron", value: nutritionData.iron, unit: "g", max: 3 },
-    { name: "Calcium", value: nutritionData.calcium, unit: "g", max: 100 },
+    {
+      name: "Vitamin C",
+      value: nutritionData.vitaminc || 0,
+      unit: "AKG",
+      max: 60,
+    },
+    {
+      name: "Vitamin D",
+      value: nutritionData.vitamind || 0,
+      unit: "AKG",
+      max: 5,
+    },
+    {
+      name: "Vitamin E",
+      value: nutritionData.vitamine || 0,
+      unit: "AKG",
+      max: 10,
+    },
+    {
+      name: "Vitamin K",
+      value: nutritionData.vitamink || 0,
+      unit: "AKG",
+      max: 10,
+    },
+    { name: "Iron", value: nutritionData.iron || 0, unit: "g", max: 3 },
+    { name: "Calcium", value: nutritionData.calcium || 0, unit: "g", max: 100 },
   ];
 
-  const formatDate = (date) => date.toISOString().split("T")[0];
+  // const formatDate = (date) => date.toISOString().split("T")[0];
 
-  const nextDay = () => {
-    const next = new Date(date);
-    next.setDate(next.getDate() + 1);
-    setDate(next);
-  };
+  // const nextDay = () => {
+  //   const next = new Date(date);
+  //   next.setDate(next.getDate() + 1);
+  //   setDate(next);
+  // };
 
-  const previousDay = () => {
-    const prev = new Date(date);
-    prev.setDate(prev.getDate() - 1);
-    setDate(prev);
-  };
+  // const previousDay = () => {
+  //   const prev = new Date(date);
+  //   prev.setDate(prev.getDate() - 1);
+  //   setDate(prev);
+  // };
 
   return (
     <div className="w-full p-4 space-y-4">
@@ -78,17 +114,20 @@ const NutritionDataDisplay = ({ nutritionData }) => {
         <h2 className="text-xl font-semibold">Nutrition Data for</h2>
         <div className="flex items-center gap-2">
           <button
-            onClick={previousDay}
+            onClick={handlePrevDate}
             className="p-2 bg-gray-200 rounded-full hover:bg-gray-300"
           >
             <ChevronLeft className="h-4 w-4" />
           </button>
           <div className="p-2 bg-gray-100 rounded-md shadow-sm">
-            <Calendar className="inline-block h-4 w-4 mr-2 text-gray-600" />
-            {formatDate(date)}
+            <Calendar
+              className="inline-block h-4 w-4 mr-2 text-gray-600"
+              onClick={handleDateChange}
+            />
+            {date}
           </div>
           <button
-            onClick={nextDay}
+            onClick={handleNextDate}
             className="p-2 bg-gray-200 rounded-full hover:bg-gray-300"
           >
             <ChevronRight className="h-4 w-4" />

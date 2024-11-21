@@ -337,6 +337,9 @@ function Dashboard() {
         {/* Nutrition Display Section */}
         {/* <NutritionDataDisplay
           nutritionData={nutritionData}
+          handleDateChange={handleDateChange}
+          handleNextDate={handleNextDate}
+          handlePrevDate={handlePreviousDate}
         ></NutritionDataDisplay> */}
         <NutritionDisplay
           nutritionData={nutritionData}
