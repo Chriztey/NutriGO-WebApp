@@ -12,7 +12,7 @@ const Footer = () => {
           >
             <img src={LogoDummy} className="h-8" alt="App Logo" />
           </a>
-          <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-[#FF7F2A] sm:mb-0">
+          {/* <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-[#FF7F2A] sm:mb-0">
             <li>
               <a href="#" className="hover:underline me-4 md:me-6">
                 About
@@ -33,15 +33,15 @@ const Footer = () => {
                 Contact
               </a>
             </li>
-          </ul>
+          </ul> */}
         </div>
         <hr className="my-6 border-[#84A98C] sm:mx-auto lg:my-8" />
         <span className="block text-sm text-[#FF7F2A] sm:text-center">
           © 2024{" "}
           <a href="#" className="hover:underline">
-            NutriGo™
+            NutriGo™ by NeuroGo <br />
           </a>
-          . All Rights Reserved.
+          All Rights Reserved.
         </span>
       </div>
     </footer>

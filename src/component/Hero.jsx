@@ -30,7 +30,7 @@ const Hero = () => {
   return (
     <div className="relative text-center">
       {/* Top section with light pink background and dark blue heading */}
-      <div className="bg-[#FCDDF2] p-8">
+      <div className="bg-gradient-to-br from-[#FCDDF2] to-green-100 p-8">
         {/* <h1 className="text-5xl font-bold text-[#0C4767]">
           NutriGo
         </h1> */}
@@ -43,7 +43,7 @@ const Hero = () => {
       </div>
 
       {/* Bottom section with button */}
-      <div className="bg-[#84A98C] p-8">
+      <div className="w-full  bg-green-100 pt-16 pb-4">
         <button
           className="bg-[#FF7F2A] text-white font-semibold rounded-md p-4 w-1/2 md:w-1/4 hover:bg-[#6E0D25]"
           onClick={() => handleClick().catch(console.error)}
