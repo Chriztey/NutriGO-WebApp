@@ -348,10 +348,12 @@ function Dashboard() {
           loading={loadingNutritionData}
         /> */}
 
-        {/* Vitamin Chart Section */}
-        <VitaminChart selectedDate={selectedDate} />
-        {/* Weekly Chart Section */}
-        <Macronutrients selectedDate={selectedDate} />
+        <div className="flex-col">
+          {/* Vitamin Chart Section */}
+          <VitaminChart selectedDate={selectedDate} />
+          {/* Weekly Chart Section */}
+          <Macronutrients selectedDate={selectedDate} />
+        </div>
 
         {/* <div className="flex flex-col md:flex-row md:justify-center md:space-x-4">
           <button

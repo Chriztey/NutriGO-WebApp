@@ -127,7 +127,7 @@ const VitaminChart = ({ selectedDate }) => {
       },
       y: {
         title: {
-          display: true,
+          display: false,
           text: nutrients.find((nutrient) => nutrient.key === selectedNutrient)
             ?.label,
         },
@@ -139,8 +139,8 @@ const VitaminChart = ({ selectedDate }) => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-lg mt-6">
-      <h2 className="text-xl md:text-4xl font-bold mb-4 font-mono text-center">
+    <div className="bg-white p-6 rounded-lg shadow-lg mt-6 max-w-4xl mx-auto">
+      <h2 className="text-2xl md:text-4xl font-bold mb-4 text-blue-900 text-center">
         Weekly Micro-Nutrient Data
       </h2>
 
@@ -148,7 +148,7 @@ const VitaminChart = ({ selectedDate }) => {
       <select
         value={selectedNutrient}
         onChange={(e) => setSelectedNutrient(e.target.value)}
-        className="p-2 mb-4 bg-[#84A98C] text-white rounded-md cursor-pointer"
+        className="p-2 mb-4 bg-gray-700 hover:bg-gray-500 text-white rounded-md cursor-pointer"
       >
         {nutrients.map((nutrient) => (
           <option key={nutrient.key} value={nutrient.key}>
@@ -159,9 +159,11 @@ const VitaminChart = ({ selectedDate }) => {
 
       {/* Loading Indicator or Chart */}
       {loading ? (
-        <p className="text-center text-gray-500">Loading data...</p>
+        <p className="text-center text-gray-500 animate-bounce text-xl">
+          Loading data...
+        </p>
       ) : weeklyData.length > 0 ? (
-        <div className="w-full h-64">
+        <div className="w-full h-[400px] md:h-[500px]">
           <Line data={chartData} options={chartOptions} />
         </div>
       ) : (

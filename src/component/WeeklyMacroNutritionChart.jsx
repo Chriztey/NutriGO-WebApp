@@ -107,16 +107,16 @@ const MacronutrientChart = ({ selectedDate }) => {
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        position: "top",
-        labels: {
-          font: {
-            size: window.innerWidth < 768 ? 10 : 12, // Responsive legend font size
-          },
-        },
-      },
-    },
+    // plugins: {
+    //   legend: {
+    //     position: "top",
+    //     labels: {
+    //       font: {
+    //         size: window.innerWidth < 768 ? 10 : 12, // Responsive legend font size
+    //       },
+    //     },
+    //   },
+    // },
     scales: {
       x: {
         title: {
@@ -126,7 +126,7 @@ const MacronutrientChart = ({ selectedDate }) => {
       },
       y: {
         title: {
-          display: true,
+          display: false,
           text: macronutrients.find((n) => n.key === selectedMacronutrient)
             ?.label,
         },
@@ -138,15 +138,15 @@ const MacronutrientChart = ({ selectedDate }) => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-lg mt-6">
-      <h2 className="text-xl md:text-4xl font-bold mb-4 font-mono text-center">
+    <div className="bg-white p-6 rounded-lg shadow-lg mt-6 max-w-4xl mx-auto">
+      <h2 className="text-2xl text-blue-900 md:text-4xl font-bold mb-4  text-center">
         Weekly Macro-Nutrient Data
       </h2>
 
       <select
         value={selectedMacronutrient}
         onChange={(e) => setSelectedMacronutrient(e.target.value)}
-        className="p-2 mb-4 bg-[#84A98C] text-white rounded-md cursor-pointer"
+        className="p-2 mb-4 bg-gray-700 hover:bg-gray-500 text-white rounded-md cursor-pointer"
       >
         {macronutrients.map((n) => (
           <option key={n.key} value={n.key}>
@@ -156,9 +156,11 @@ const MacronutrientChart = ({ selectedDate }) => {
       </select>
 
       {loading ? (
-        <p className="text-center text-gray-500">Loading data...</p>
+        <p className="text-center text-gray-500 animate-bounce text-xl">
+          Loading data...
+        </p>
       ) : (
-        <div className="w-full h-64">
+        <div className="w-full h-[400px] md:h-[500px]">
           <Line data={chartData} options={chartOptions} />
         </div>
       )}
