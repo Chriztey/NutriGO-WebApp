@@ -14,6 +14,7 @@ import VitaminChart from "../component/WeeklyMicroNutrionChart";
 import NutritionDisplay from "../component/NutritionDisplay";
 import ProfileHeader from "../component/ProfileHeader";
 import NutritionDataDisplay from "../component/NutritionDataDisplay.jsx";
+import NutritionLoadingScreen from "../component/Loading.jsx";
 
 function Dashboard() {
   const [nutritionData, setNutritionData] = useState(null);
@@ -62,7 +63,12 @@ function Dashboard() {
         const isComplete = requiredFields.every((field) => data[field]);
         setIsProfileComplete(isComplete);
         setLoadingProfileCheck(false); // Completeness check done
-        setLoading(false); // Stop other loading
+
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000); // Delay for 3000 milliseconds
+
+        // setLoading(false); // Stop other loading
       } else {
         // If user data doesn't exist, consider profile incomplete
         setIsProfileComplete(false);
@@ -165,9 +171,10 @@ function Dashboard() {
   // Loading screen
   if (loading || loadingProfileCheck) {
     return (
-      <div className="flex items-center justify-center h-screen bg-[#FCDDF2] text-[#0C4767]">
-        <p className="text-xl">Loading...</p>
-      </div>
+      <NutritionLoadingScreen></NutritionLoadingScreen>
+      // <div className="flex items-center justify-center h-screen bg-[#FCDDF2] text-[#0C4767]">
+      //   {/* <p className="text-xl">Loading...</p> */}
+      // </div>
     );
   }
 

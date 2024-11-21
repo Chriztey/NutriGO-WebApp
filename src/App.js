@@ -12,6 +12,7 @@ import { setDoc, doc, getDoc } from "firebase/firestore";
 import Dashboard from "./pages/Profile";
 import UserForm from "./pages/UserForm";
 import Onboarding from "./pages/Onboarding";
+import NutritionLoadingScreen from "./component/Loading";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -68,6 +69,10 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/onboarding" element={<Onboarding></Onboarding>} />
+        <Route
+          path="/load"
+          element={<NutritionLoadingScreen></NutritionLoadingScreen>}
+        />
       </Routes>
     </Router>
   );

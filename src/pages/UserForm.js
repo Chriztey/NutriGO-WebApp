@@ -4,6 +4,8 @@ import { auth, db as firestore } from "../firebase";
 import { setDoc, doc, getDoc } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import NutritionLoadingScreen from "../component/Loading";
+import { delay } from "framer-motion";
 
 function UserForm() {
   const [formData, setFormData] = useState({
@@ -59,8 +61,12 @@ function UserForm() {
     } catch (error) {
       console.error("Error fetching user data:", error);
       toast.error("Failed to load user data.");
+    } finally {
+      // Introduce a delay before stopping the loading state
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000); // Delay for 3000 milliseconds
     }
-    setLoading(false); // Stop loading after data is fetched
   };
 
   useEffect(() => {
@@ -179,9 +185,10 @@ function UserForm() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-screen bg-[#FCDDF2] text-[#0C4767]">
-        <p className="text-xl">Loading...</p>
-      </div>
+      <NutritionLoadingScreen></NutritionLoadingScreen>
+      // <div className="flex items-center justify-center h-screen bg-[#FCDDF2] text-[#0C4767]">
+      //   <p className="text-xl">Loading...</p>
+      // </div>
     );
   }
 
