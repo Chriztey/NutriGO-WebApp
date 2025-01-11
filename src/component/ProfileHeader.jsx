@@ -8,6 +8,7 @@ import {
   Dumbbell,
   Droplet,
   Torus,
+  Percent,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import DropdownMenuComponent from "./UserProfileDropdown";
@@ -28,6 +29,10 @@ export default function ProfileHeader({
   const [calories, setCalories] = useState(0);
   const [protein, setProtein] = useState(0);
   const [fats, setFats] = useState(0);
+
+  const totalVitaminsDynamic = Object.keys(todayNutritionData)
+    .filter((key) => key.startsWith("vitamin"))
+    .reduce((sum, key) => sum + todayNutritionData[key], 0);
 
   useEffect(() => {
     // Simulate data loading
@@ -62,14 +67,14 @@ export default function ProfileHeader({
               ></DropdownMenuComponent>
               {/* <p className="text-end">Test Test</p> */}
 
-              <div className="flex items-center gap-4 ml-auto">
-                <div className="flex items-center gap-2">
+              <div className="md:flex items-center gap-4 ml-auto">
+                <div className="flex items-center gap-2 pt-2 pb-4">
                   <Calendar className="w-5 h-5 text-indigo-500" />
                   <span className="text-sm font-medium text-gray-600">
                     {date}
                   </span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 pt-2 pb-4">
                   <Phone className="w-5 h-5 text-indigo-500" />
                   <span className="text-sm font-medium text-gray-600">
                     {phone}
@@ -132,6 +137,14 @@ export default function ProfileHeader({
             icon={<Torus className="w-5 h-5" />}
             color="bg-orange-500"
             unit="g"
+          />
+
+          <StatCard
+            title="Vitamins %"
+            value={totalVitaminsDynamic ? totalVitaminsDynamic / 10 : 0}
+            icon={<Percent className="w-full h-5" />}
+            color="bg-blue-400"
+            unit="%"
           />
         </div>
       </div>

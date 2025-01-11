@@ -107,16 +107,7 @@ const MacronutrientChart = ({ selectedDate }) => {
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
-    // plugins: {
-    //   legend: {
-    //     position: "top",
-    //     labels: {
-    //       font: {
-    //         size: window.innerWidth < 768 ? 10 : 12, // Responsive legend font size
-    //       },
-    //     },
-    //   },
-    // },
+
     scales: {
       x: {
         title: {
