@@ -242,7 +242,7 @@ function Dashboard() {
 
   // Redirect to home if not authenticated
   if (!isAuthenticated) {
-    return <Navigate to="/home" replace />;
+    return <Navigate to="/" replace />;
   }
 
   // Loading screen

@@ -1,69 +1,81 @@
-import React from "react";
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
+import React, { useState } from "react";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  ResponsiveContainer,
+  Legend,
+  Tooltip,
+} from "recharts";
 
-const vitaminData = [
-  { name: "Vitamin A", value: 1000 },
-  { name: "Vitamin B", value: 800 },
-  { name: "Vitamin C", value: 1200 },
-];
+const data = {
+  monthly: [
+    { name: "Vitamin D", value: 45 },
+    { name: "Vitamin B12", value: 30 },
+    { name: "Vitamin C", value: 25 },
+  ],
+  yearly: [
+    { name: "Vitamin A", value: 40 },
+    { name: "Vitamin E", value: 35 },
+    { name: "Vitamin K", value: 25 },
+  ],
+  allTime: [
+    { name: "Vitamin B6", value: 50 },
+    { name: "Vitamin B9", value: 30 },
+    { name: "Vitamin B3", value: 20 },
+  ],
+};
 
-const COLORS = ["#FF8042", "#00C49F", "#FFBB28"];
+const COLORS = ["#FF6384", "#36A2EB", "#FFCE56"];
 
-const VitaminPieChart = () => {
-  const lowestVitamin = vitaminData.reduce((min, vitamin) =>
-    vitamin.value < min.value ? vitamin : min
-  );
+const VitaminsPieChart = () => {
+  const [timeFrame, setTimeFrame] = useState("monthly");
 
   return (
-    <div className="w-full max-w-lg border p-4 rounded-lg shadow-lg">
-      <div className="mb-4">
-        <h2 className="text-xl font-semibold">Vitamin Comparison</h2>
-        <p className="text-gray-600">
-          Pie chart showing the lowest value among 3 vitamins
-        </p>
+    <div className="bg-white/50 backdrop-blur-lg border-none shadow-lg rounded-lg p-6">
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-xl font-bold text-indigo-900">
+          Top 3 Less Fulfilled Vitamins
+        </h2>
+        <select
+          className="p-2 border border-gray-300 rounded-md"
+          value={timeFrame}
+          onChange={(e) => setTimeFrame(e.target.value)}
+        >
+          <option value="monthly">Monthly</option>
+          <option value="yearly">Yearly</option>
+          <option value="allTime">All Time</option>
+        </select>
       </div>
-      <div style={{ height: "300px" }}>
+      <div className="h-[300px]">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
-            <Tooltip formatter={(value) => `${value} mcg`} />
             <Pie
-              data={vitaminData}
+              data={data[timeFrame]}
               cx="50%"
               cy="50%"
               labelLine={false}
               outerRadius={80}
               fill="#8884d8"
               dataKey="value"
+              label={({ name, percent }) =>
+                `${name} ${(percent * 100).toFixed(0)}%`
+              }
             >
-              {vitaminData.map((entry, index) => (
+              {data[timeFrame].map((entry, index) => (
                 <Cell
                   key={`cell-${index}`}
                   fill={COLORS[index % COLORS.length]}
-                  stroke={entry.name === lowestVitamin.name ? "#000" : "none"}
-                  strokeWidth={entry.name === lowestVitamin.name ? 2 : 0}
                 />
               ))}
             </Pie>
+            <Tooltip />
+            <Legend />
           </PieChart>
         </ResponsiveContainer>
-      </div>
-      <div className="mt-4 flex justify-center space-x-4">
-        {vitaminData.map((entry, index) => (
-          <div key={`legend-${index}`} className="flex items-center">
-            <div
-              className="w-3 h-3 mr-1"
-              style={{ backgroundColor: COLORS[index % COLORS.length] }}
-            />
-            <span
-              className={entry.name === lowestVitamin.name ? "font-bold" : ""}
-            >
-              {entry.name}: {entry.value} mcg
-            </span>
-          </div>
-        ))}
       </div>
     </div>
   );
 };
 
-export default VitaminPieChart;
+export default VitaminsPieChart;

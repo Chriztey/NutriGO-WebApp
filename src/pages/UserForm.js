@@ -137,6 +137,7 @@ function UserForm() {
             uid: user.uid,
             displayName: user.displayName,
             email: user.email,
+            role: "user",
             ...formData,
           },
           { merge: true }

@@ -12,6 +12,7 @@ import Dashboard from "./pages/Profile";
 import UserForm from "./pages/UserForm";
 import Onboarding from "./pages/Onboarding";
 import NutritionLoadingScreen from "./component/Loading";
+import AdminDashboard from "./pages/AdminDashboard";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -67,6 +68,7 @@ function App() {
         <Route path="/user-form" element={<UserForm />} />
         <Route path="/home" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/admin" element={<AdminDashboard></AdminDashboard>} />
         <Route path="/onboarding" element={<Onboarding></Onboarding>} />
         <Route
           path="/load"

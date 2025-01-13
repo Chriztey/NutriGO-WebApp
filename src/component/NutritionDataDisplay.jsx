@@ -290,7 +290,7 @@ const NutritionDataDisplay = ({
           </div>
 
           {nutritionData ? (
-            <div className="mx-auto max-w-7xl bg-gradient-to-br from-red-50 to-red-100 rounded-lg shadow-md p-6 transition-all duration-300">
+            <div className="mx-auto max-w-7xl bg-gradient-to-br from-gray-150 to-gray-250 rounded-lg shadow-md p-6 transition-all duration-300">
               {/* Vitamins Section */}
               <div className="flex flex-row items-center justify-between mb-4">
                 <h3 className="text-xl font-bold">Vitamins and Minerals</h3>
@@ -388,8 +388,8 @@ const NutritionDataDisplay = ({
               </div>
             </div>
           ) : (
-            <div className="bg-red-400 shadow-lg p-4 rounded-lg flex items-center justify-center min-h-[300px]">
-              <p className="text-2xl font-medium text-yellow-900">
+            <div className="mx-auto max-w-7xl  p-4  flex items-center justify-center">
+              <p className="text-xl font-semibold text-gray-900">
                 No Data Added On This Date
               </p>
             </div>

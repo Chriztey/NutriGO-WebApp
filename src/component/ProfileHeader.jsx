@@ -20,11 +20,6 @@ export default function ProfileHeader({
   todayNutritionData,
   onLogout = () => console.log("Logout clicked"),
   onEditProfile = () => console.log("Edit profile clicked"),
-  //   calories,
-  //   carbs,
-  //   fat,
-  //   protein,
-  //   fiber,
 }) {
   const [calories, setCalories] = useState(0);
   const [protein, setProtein] = useState(0);
