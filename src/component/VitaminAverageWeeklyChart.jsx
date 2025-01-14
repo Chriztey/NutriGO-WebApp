@@ -12,65 +12,7 @@ import { auth, db as firestore } from "../firebase"; // Ensure correct Firebase 
 import { format, subDays } from "date-fns";
 import { doc, getDoc } from "firebase/firestore";
 
-const VitaminAverageWeeklyChart = ({ selectedDate }) => {
-  const [weeklyData, setWeeklyData] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  const fetchWeeklyData = useCallback(async () => {
-    const user = auth.currentUser;
-    if (!user) return;
-
-    setLoading(true);
-    const promises = [];
-    const dates = [];
-
-    for (let i = 6; i >= 0; i--) {
-      const date = subDays(selectedDate, i);
-      dates.push(format(date, "yyyy-MM-dd"));
-
-      const docRef = doc(
-        firestore,
-        `users/${user.uid}/nutritionData/${format(date, "yyyy-MM-dd")}`
-      );
-      promises.push(getDoc(docRef));
-    }
-
-    try {
-      const results = await Promise.all(promises);
-      const data = results.map((docSnap, index) => {
-        if (docSnap.exists()) {
-          const docData = docSnap.data();
-          const vitaminKeys = Object.keys(docData).filter((key) =>
-            key.includes("vitamin")
-          );
-          const averageValue =
-            vitaminKeys.reduce((sum, key) => sum + docData[key], 0) /
-            vitaminKeys.length;
-
-          return {
-            day: dates[index],
-            average: averageValue || 0,
-          };
-        } else {
-          return {
-            day: dates[index],
-            average: 0,
-          };
-        }
-      });
-
-      setWeeklyData(data);
-    } catch (error) {
-      console.error("Error fetching weekly data:", error);
-    } finally {
-      setLoading(false);
-    }
-  }, [selectedDate]);
-
-  useEffect(() => {
-    fetchWeeklyData();
-  }, [fetchWeeklyData]);
-
+const VitaminAverageWeeklyChart = ({ loading, weeklyData }) => {
   return (
     <div className=" bg-gray-50 p-4 md:p-8">
       <div className="mx-auto max-w-7xl bg-white shadow-lg rounded-lg p-6">

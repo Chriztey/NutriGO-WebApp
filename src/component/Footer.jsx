@@ -37,9 +37,9 @@ const Footer = () => {
         </div>
         <hr className="my-6 border-[#84A98C] sm:mx-auto lg:my-8" />
         <span className="block text-sm text-[#FF7F2A] sm:text-center">
-          © 2024{" "}
+          © 2025{" "}
           <a href="#" className="hover:underline">
-            NutriGo™ by NeuroGo <br />
+            NutriGo™ <br />
           </a>
           All Rights Reserved.
         </span>

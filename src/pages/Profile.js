@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import { auth, db as firestore } from "../firebase";
 import { doc, getDoc, setDoc } from "firebase/firestore";
@@ -118,31 +118,6 @@ function Dashboard() {
     }
   };
 
-  // const fetchRecommendedValue = async () => {
-  //   setLoadingNutritionData(true);
-  //   const user = auth.currentUser;
-  //   if (!user) return;
-
-  //   try {
-  //     const recommendValue = await getDoc(
-  //       doc(
-  //         firestore,
-  //         `users/${user.uid}/nutritionData/recommendedValue/recommendedValue`
-  //       )
-  //     );
-  //     if (recommendValue.exists()) {
-  //       setRecommendedValue(recommendValue.data());
-  //       setLoadingNutritionData(false);
-  //     } else {
-  //       setRecommendedValue(null); // No data for this date
-  //       setLoadingNutritionData(false);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching nutrition data:", error);
-  //     setLoadingNutritionData(false);
-  //   }
-  // };
-
   const fetchNutritionData = async () => {
     setLoadingNutritionData(true);
     const user = auth.currentUser;
@@ -186,6 +161,63 @@ function Dashboard() {
       console.error("Error signing out:", error);
     }
   };
+
+  const [weeklyData, setWeeklyData] = useState([]);
+
+  const fetchWeeklyData = useCallback(async () => {
+    const user = auth.currentUser;
+    if (!user) return;
+
+    setLoadingNutritionData(true);
+    const promises = [];
+    const dates = [];
+
+    for (let i = 6; i >= 0; i--) {
+      const date = subDays(selectedDate, i);
+      dates.push(format(date, "yyyy-MM-dd"));
+
+      const docRef = doc(
+        firestore,
+        `users/${user.uid}/nutritionData/${format(date, "yyyy-MM-dd")}`
+      );
+      promises.push(getDoc(docRef));
+    }
+
+    try {
+      const results = await Promise.all(promises);
+      const data = results.map((docSnap, index) => {
+        if (docSnap.exists()) {
+          const docData = docSnap.data();
+          const vitaminKeys = Object.keys(docData).filter((key) =>
+            key.includes("vitamin")
+          );
+          const averageValue =
+            vitaminKeys.reduce((sum, key) => sum + docData[key], 0) /
+            vitaminKeys.length;
+
+          return {
+            day: dates[index],
+            average: averageValue || 0,
+          };
+        } else {
+          return {
+            day: dates[index],
+            average: 0,
+          };
+        }
+      });
+
+      setWeeklyData(data);
+    } catch (error) {
+      console.error("Error fetching weekly data:", error);
+    } finally {
+      setLoadingNutritionData(false);
+    }
+  }, [selectedDate]);
+
+  useEffect(() => {
+    fetchWeeklyData();
+  }, [fetchWeeklyData]);
 
   // Testing Push Data
 
@@ -270,12 +302,13 @@ function Dashboard() {
           </p>
         )}
 
-        <button onClick={pushData} disabled={loading}>
+        {/* <button onClick={pushData} disabled={loading}>
           {loading ? "Pushing Data..." : "Push Nutrition Data"}
-        </button>
+        </button> */}
 
         <NutritionDataDisplay
           nutritionData={nutritionData}
+          weeklyData={weeklyData}
           selectedDate={selectedDate}
           handleDateChange={handleDateChange}
           handleNextDate={handleNextDate}

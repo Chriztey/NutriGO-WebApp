@@ -55,21 +55,21 @@ export default function ProfileHeader({
                 <p className="text-sm text-gray-500">Welcome back!</p>
               </div>
             </div>
-            <div className="flex flex-col gap-2 ml-auto">
+            <div className="flex flex-col gap-2 md:ml-auto">
               <DropdownMenuComponent
                 onLogout={onLogout}
                 onEditProfile={onEditProfile}
               ></DropdownMenuComponent>
               {/* <p className="text-end">Test Test</p> */}
 
-              <div className="md:flex items-center gap-4 ml-auto">
-                <div className="flex items-center gap-2 pt-2 pb-4">
+              <div className="md:flex items-center gap-4 md:ml-auto">
+                <div className="flex items-center gap-2 pt-2 pb-2">
                   <Calendar className="w-5 h-5 text-indigo-500" />
                   <span className="text-sm font-medium text-gray-600">
                     {date}
                   </span>
                 </div>
-                <div className="flex items-center gap-2 pt-2 pb-4">
+                <div className="flex items-center gap-2 pt-2 pb-2">
                   <Phone className="w-5 h-5 text-indigo-500" />
                   <span className="text-sm font-medium text-gray-600">
                     {phone}

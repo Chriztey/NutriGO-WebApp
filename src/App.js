@@ -13,6 +13,8 @@ import UserForm from "./pages/UserForm";
 import Onboarding from "./pages/Onboarding";
 import NutritionLoadingScreen from "./component/Loading";
 import AdminDashboard from "./pages/AdminDashboard";
+import SampleAdminDashboard from "./pages/SampleAdminDb";
+import SampleUserDashboard from "./pages/SampleUserDb";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -73,6 +75,15 @@ function App() {
         <Route
           path="/load"
           element={<NutritionLoadingScreen></NutritionLoadingScreen>}
+        />
+        {/* Sample Routes*/}
+        <Route
+          path="/admintest"
+          element={<SampleAdminDashboard></SampleAdminDashboard>}
+        />
+        <Route
+          path="/usertest"
+          element={<SampleUserDashboard></SampleUserDashboard>}
         />
       </Routes>
     </Router>

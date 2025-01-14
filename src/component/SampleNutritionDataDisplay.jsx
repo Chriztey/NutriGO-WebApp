@@ -24,8 +24,9 @@ import AdsPlaceholder from "../asset/ads_placeholder.png";
 import VitaminAverageWeeklyChart from "./VitaminAverageWeeklyChart";
 import VitaminFulfillmentCard from "./VitaminFullfilmentCard";
 import DietRecommendationCard from "./DietRecommendation";
+import SampleVitaminAverageWeeklyChart from "./SampleVitaminAverageWeeklyChart";
 
-const NutritionDataDisplay = ({
+const SampleNutritionDataDisplay = ({
   nutritionData,
   weeklyData,
   selectedDate,
@@ -278,10 +279,9 @@ const NutritionDataDisplay = ({
             ))}
           </div> */}
 
-          <VitaminAverageWeeklyChart
-            loading={loading}
-            weeklyData={weeklyData}
-          ></VitaminAverageWeeklyChart>
+          <SampleVitaminAverageWeeklyChart
+            weeklyNutritionData={weeklyData}
+          ></SampleVitaminAverageWeeklyChart>
 
           {/* Nutrient Cards */}
 
@@ -406,4 +406,4 @@ const NutritionDataDisplay = ({
   );
 };
 
-export default NutritionDataDisplay;
+export default SampleNutritionDataDisplay;
